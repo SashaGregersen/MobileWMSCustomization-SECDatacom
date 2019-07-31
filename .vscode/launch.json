@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "BusinessCentral",
+            "type": "al",
+            "request": "launch",
+            "server": "http://192.168.151.168:7089/DEVBC",
+            "serverInstance": "DEVBC",
+            "authentication": "Windows",
+            "breakOnError": true,
+            "breakOnRecordWrite": false,
+            "port": 7089,
+            "schemaUpdateMode": "Synchronize"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "13e74a1e-f160-46db-a2c1-86ed56fb4b97",
+  "name": "Mobile WMS Customizations",
+  "publisher": "Netcompany",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "appId": "b3f608cf-fa76-462c-8aa1-ef5adaceb427",
+      "name": "Mobile WMS (Tenant Edition)",
+      "publisher": "Tasklet Factory",
+      "version": "4.35.0.1"
+    }
+  ],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 50099
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://SECDatacom.com/help/",
+  "showMyCode": true,
+  "runtime": "3.0"
+}

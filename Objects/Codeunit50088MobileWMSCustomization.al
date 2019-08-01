@@ -128,16 +128,16 @@ codeunit 50088 "Mobile WMS customization"
         CASE _RegistrationType of
             'SerialNumberReceive':
                 begin
-                    MobXMLMgt.GetDocRootNode(_XMLRequestDoc, XMLRequestNode);
-                    MobXMLMgt.FindNode(XMLRequestNode, MobWMSToolbox."CONST::requestData"(), XMLRequestDataNode);
+                    //MobXMLMgt.GetDocRootNode(_XMLRequestDoc, XMLRequestNode);
+                    //MobXMLMgt.FindNode(XMLRequestNode, MobWMSToolbox."CONST::requestData"(), XMLRequestDataNode);
 
                     // -- Now find the item parameter
-                    MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
+                    //MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
                     // -- Get the parameter
                     //ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
 
                     // Set the tracking value displayed in the document queue
-                    _RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);
+                    //_RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);
 
 
 

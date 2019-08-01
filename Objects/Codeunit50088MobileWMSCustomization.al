@@ -79,7 +79,8 @@ codeunit 50088 "Mobile WMS customization"
                     // -- Now find the item parameter
                     MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
                     // -- Get the parameter
-                    ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
+                    //ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
+                    ItemNo := '1234';
 
                     // Set the tracking value displayed in the document queue
                     _RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);
@@ -104,6 +105,43 @@ codeunit 50088 "Mobile WMS customization"
                     MobConfTools.RC_Text_XmlNode(_XMLSteps,
                                                  '',
                                                  20);
+
+                    _IsHandled := true;
+                end;
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::codeunit, codeunit::"MOB WMS Adhoc Registr.", 'OnPostCustomAdhocRegistration', '', true, true)]
+    local procedure OnPostCustomAdhocRegistrationEvent(var _XMLRequestDoc: XmlDocument; _RegistrationType: Text; var _RegistrationTypeTracking: Text[200]; var _IsHandled: Boolean)
+    var
+        ItemVariant: Record "Item Variant";
+        XMLRequestNode: XmlNode;
+        XMLRequestDataNode: XmlNode;
+        XMLParameterNode: XmlNode;
+        ItemNo: Code[20];
+        MobXMLMgt: Codeunit "MOB XML Management";
+        MobWMSToolbox: Codeunit "MOB WMS Toolbox";
+        MobBaseToolbox: codeunit "MOB Toolbox";
+        MobConfTools: Codeunit "MOB WMS Conf. Tools";
+        MobWmsLanguage: Codeunit "MOB WMS Language";
+    begin
+        CASE _RegistrationType of
+            'SerialNumberReceive':
+                begin
+                    MobXMLMgt.GetDocRootNode(_XMLRequestDoc, XMLRequestNode);
+                    MobXMLMgt.FindNode(XMLRequestNode, MobWMSToolbox."CONST::requestData"(), XMLRequestDataNode);
+
+                    // -- Now find the item parameter
+                    MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
+                    // -- Get the parameter
+                    //ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
+
+                    // Set the tracking value displayed in the document queue
+                    _RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);
+
+
+
+                    _IsHandled := true;
                 end;
         END;
     end;

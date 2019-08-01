@@ -55,4 +55,56 @@ codeunit 50088 "Mobile WMS customization"
         end;
 
     end;
+
+    [EventSubscriber(ObjectType::codeunit, codeunit::"MOB WMS Adhoc Registr.", 'OnCreateCustomRegCollectorConfig', '', true, true)]
+    local procedure OnCreateCustomRegCollectorConfigEvent(var _XMLRequestDoc: XmlDocument; var _XMLSteps: XmlNode; _RegistrationType: Text; var _RegistrationTypeTracking: Text[200]; var _IsHandled: Boolean)
+    var
+        ItemVariant: Record "Item Variant";
+        XMLRequestNode: XmlNode;
+        XMLRequestDataNode: XmlNode;
+        XMLParameterNode: XmlNode;
+        ItemNo: Code[20];
+        MobXMLMgt: Codeunit "MOB XML Management";
+        MobWMSToolbox: Codeunit "MOB WMS Toolbox";
+        MobBaseToolbox: codeunit "MOB Toolbox";
+        MobConfTools: Codeunit "MOB WMS Conf. Tools";
+        MobWmsLanguage: Codeunit "MOB WMS Language";
+    begin
+        CASE _RegistrationType of
+            'SerialNumberReceive':
+                begin
+                    MobXMLMgt.GetDocRootNode(_XMLRequestDoc, XMLRequestNode);
+                    MobXMLMgt.FindNode(XMLRequestNode, MobWMSToolbox."CONST::requestData"(), XMLRequestDataNode);
+
+                    // -- Now find the item parameter
+                    MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
+                    // -- Get the parameter
+                    ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
+
+                    // Set the tracking value displayed in the document queue
+                    _RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);
+
+                    // From Bin
+                    // Set the basic required values
+                    MobConfTools.RC_Std_Parms(1,
+                                              'Bin',
+                                              MobWmsLanguage.GetMessage('ITEM') + ' ' + ItemNo + ' - ' +
+                                              MobWmsLanguage.GetMessage('ENTER_FROM_BIN'),
+                                              MobWmsLanguage.GetMessage('FROM_BIN_LABEL') + ':',
+                                              MobWmsLanguage.GetMessage('DEFAULT') + ': ' /* + GetDefaultBin(ItemNo, LocationCode, VariantCode) */);
+
+                    // Set the extended parameters
+                    MobConfTools.RC_Ext_Parms(MobBaseToolbox.GetBinGS1Ai(),
+                                              true,
+                                              false,
+                                              true,
+                                              100);
+
+                    // Create the step
+                    MobConfTools.RC_Text_XmlNode(_XMLSteps,
+                                                 '',
+                                                 20);
+                end;
+        END;
+    end;
 }

@@ -277,4 +277,12 @@ codeunit 50088 "Mobile WMS customization"
                         Receive := true;
         end; 
     end; */
+
+    [EventSubscriber(ObjectType::codeunit, codeunit::"Whse.-Activity-Post", 'OnCodeOnAfterCreatePostedWhseActivDocument', '', true, true)]
+    local procedure OnCodeOnAfterCreatePostedWhseActivDocumentEvent(VAR WhseActivityHeader: Record "Warehouse Activity Header")
+    var
+        WhseActPost: codeunit "Whse.-Activity-Post";
+    begin
+        WhseActPost.PrintDocument(true);
+    end;
 }

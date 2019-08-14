@@ -143,7 +143,9 @@ codeunit 50087 "Post Put Away Serial"
                         WhseActivLine.MODIFY;
                         OnAfterWhseActivLineModify(WhseActivLine);
                     END;
-                UNTIL WhseActivLine.NEXT = 0;
+                UNTIL WhseActivLine.NEXT = 0
+            else
+                WhseActivHeader.Delete(true);
 
 
             WhseActivLine.RESET;
@@ -152,12 +154,12 @@ codeunit 50087 "Post Put Away Serial"
             // SEC - to support partial  put away
             //>>>
             //WhseActivLine.SETFILTER("Qty. Outstanding", '<>%1', 0);
-            WhseActivLine.setrange("Qty. Outstanding", 0);
-            WhseActivLine.setrange("Qty. Handled", 1);
+            //WhseActivLine.setrange("Qty. Outstanding", 0);
+            //WhseActivLine.setrange("Qty. Handled", 1);
 
-            IF WhseActivLine.FIND('-') THEN
+            IF not WhseActivLine.FIND('-') THEN
                 //WhseActicLine.Delete(TRUE);
-                WhseActivLine.DELETE(false);
+                WhseActivHeader.delete(true);
             //<<<
             IF NOT HideDialog THEN
                 Window.CLOSE;

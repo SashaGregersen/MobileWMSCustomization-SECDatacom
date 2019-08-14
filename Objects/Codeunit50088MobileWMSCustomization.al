@@ -25,7 +25,7 @@ codeunit 50088 "Mobile WMS customization"
                     MobWMSRef.AddConfHeaderTextValue(_XmlCDataSection,
                                1,                 //id
                                'OrderBackendID',      //name
-                               'Order No.:',  //label
+                               'Put-Away No.:',  //label
                                100,               //label width
                                false,              //clear on clear
                                false,              //accept barcode

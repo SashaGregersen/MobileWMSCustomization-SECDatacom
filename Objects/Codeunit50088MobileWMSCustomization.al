@@ -63,7 +63,7 @@ codeunit 50088 "Mobile WMS customization"
         XMLRequestNode: XmlNode;
         XMLRequestDataNode: XmlNode;
         XMLParameterNode: XmlNode;
-        ItemNo: Code[20];
+        ItemNo: Code[60];
         MobXMLMgt: Codeunit "MOB XML Management";
         MobWMSToolbox: Codeunit "MOB WMS Toolbox";
         MobBaseToolbox: codeunit "MOB Toolbox";
@@ -82,6 +82,9 @@ codeunit 50088 "Mobile WMS customization"
                     MobXMLMgt.FindNode(XMLRequestDataNode, 'ItemNumber', XMLParameterNode);
                     // -- Get the parameter
                     ItemNo := MobWMSToolbox.GetItemNumber(MobBaseToolbox.ReadMisc(MobXmlMgt.GetNodeInnerText(XMLParameterNode)));
+
+                    Item.get(ItemNo);
+                    ItemNo := Item."Vendor Item No.";
 
                     // Set the tracking value displayed in the document queue
                     _RegistrationTypeTracking := StrSubstNo('SerialNumberReceive' + ': %1', ItemNo);

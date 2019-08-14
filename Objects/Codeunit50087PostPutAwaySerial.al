@@ -670,6 +670,8 @@ codeunit 50087 "Post Put Away Serial"
     LOCAL procedure PostSourceDoc()
     begin
         TempWhseActivLine.RESET;
+        TempWhseActivLine.SetRange("Source No.", WhseActivHeader."Source No.");
+        TempWhseActivLine.setrange("Source type", WhseActivHeader."Source type");
         TempWhseActivLine.FIND('-');
         InitSourceDocument;
         REPEAT
